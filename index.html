@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phantom TT Hub - TikTok & All Platforms Downloader</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080a;--card:#111113;--card2:#18181b;--border:#232326;--text:#f4f4f5;--muted:#a1a1aa;--accent:#ff0050;--accent2:#00f2ea;--green:#00ff88}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter;background:var(--bg);color:var(--text);min-height:100vh}
+h1,h2{font-family:Space Grotesk}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:50;background:rgba(8,8,10,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
+.logo span{font-family:Space Grotesk}
+.dot{width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.tag{padding:4px 10px;border-radius:20px;background:var(--card2);border:1px solid var(--border);font-size:11px;font-family:JetBrains Mono}
+.btn{padding:12px 20px;border-radius:12px;font-weight:600;font-size:14px;border:none;cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center;transition:.2s;text-decoration:none}
+.btn-p{background:linear-gradient(135deg,var(--accent),#ff2d6b);color:#fff}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(255,0,80,.3)}
+.btn-g{background:var(--card2);border:1px solid var(--border);color:var(--text)}
+.btn-g:hover{border-color:#3f3f46}
+.btn-green{background:var(--green);color:#000;font-weight:700}
+.input-wrap{position:relative;display:flex;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:6px}
+.input-wrap:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,0,80,.1)}
+.input-wrap input{flex:1;background:transparent;border:none;color:var(--text);padding:14px 16px;font-size:16px;outline:none;font-family:Inter}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+.hero{padding:50px 0 20px;text-align:center}
+.hero h1{font-size:52px;line-height:.9;letter-spacing:-.04em;margin-bottom:16px}
+.hero h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);font-size:18px;max-width:600px;margin:0 auto 30px}
+.platforms{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0}
+.platform{padding:8px 14px;border-radius:100px;background:var(--card2);border:1px solid var(--border);font-size:13px;display:flex;gap:6px;align-items:center;font-weight:500}
+.platform.main{border-color:var(--accent);background:rgba(255,0,80,.1)}
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:1fr 1fr}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+@media(max-width:800px){.hero h1{font-size:36px}.grid-2{grid-template-columns:1fr}}
+.video-preview{display:flex;gap:16px;align-items:start}
+.thumb{width:140px;height:180px;object-fit:cover;border-radius:12px;background:var(--card2);border:1px solid var(--border)}
+.meta{flex:1}
+.download-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.history-item{display:flex;gap:12px;padding:12px;background:var(--card2);border-radius:12px;border:1px solid var(--border);align-items:center}
+.history-thumb{width:56px;height:56px;border-radius:8px;object-fit:cover;background:var(--card)}
+.loader{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.badge{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;letter-spacing:.05em}
+.badge-tt{background:var(--accent);color:#fff}
+.badge-others{background:var(--card2);border:1px solid var(--border);color:var(--muted)}
+</style>
+</head>
+<body>
+<nav><div class="container nav-inner"><div class="logo"><div class="dot"></div><span>phantom</span><span style="color:var(--accent)">tt</span> <span class="tag" style="margin-left:8px">VERCEL FULLSTACK</span></div><div style="display:flex;gap:8px"><a class="btn btn-g" style="padding:8px 14px" href="https://ttdownloader-hraw.onrender.com" target="_blank">Old API</a><a class="btn btn-g" style="padding:8px 14px" href="mailto:phantomthedev@proton.me">Contact</a></div></div></nav>
+
+<div class="container">
+<div class="hero">
+<h1>TikTok + Any Link<br><span>Downloader</span></h1>
+<p>Paste TikTok, Instagram, Facebook, X, Pinterest, YouTube, Reddit - even any public video link. Mainly TikTok, but works for all. Fullstack on Vercel.</p>
+
+<div class="platforms" id="platformsList">Loading platforms...</div>
+
+<div style="max-width:700px;margin:30px auto">
+<div class="input-wrap">
+<input id="urlInput" placeholder="Paste TikTok link here... https://www.tiktok.com/@..." autofocus>
+<button class="btn btn-g" onclick="pasteClipboard()" title="Paste from clipboard">📋</button>
+<button class="btn btn-p" onclick="downloadNow()" id="dlBtn">Download</button>
+</div>
+<div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+<span class="tag">🎵 Main: TikTok</span><span class="tag">📸 IG • 👍 FB • 𝕏 X • 📌 Pinterest • ▶️ YT • Any</span><span class="tag">Backend: /api/download</span>
+</div>
+</div>
+</div>
+
+<div id="resultArea" style="display:none;max-width:800px;margin:0 auto 30px"></div>
+
+<div class="grid grid-2" style="max-width:1000px;margin:0 auto">
+<div class="card">
+<h3 style="margin-bottom:12px">How it works (Fullstack Vercel)</h3>
+<div style="font-size:14px;color:var(--muted);line-height:1.7">
+<b>Frontend:</b> index.html (this page) - paste link, auto-detect platform, show preview<br>
+<b>Backend:</b> <code style="background:var(--card2);padding:2px 6px;border-radius:6px">/api/index.py</code> Python Flask + yt-dlp<br>
+• <b>/api/download</b> - extracts direct video URL (TikTok main + IG/FB/X/Pinterest)<br>
+• <b>/api/history</b> - saves your downloads<br>
+• <b>/api/platforms</b> - lists supported platforms<br>
+• Fallback to your Render API <code>ttdownloader-hraw.onrender.com</code> for TikTok<br><br>
+Deploys as one project on Vercel - both frontend + backend.
+</div>
+</div>
+<div class="card">
+<h3 style="margin-bottom:12px">History (from /api/history backend)</h3>
+<div id="historyList" style="display:flex;flex-direction:column;gap:8px">Loading...</div>
+<button class="btn btn-g" style="width:100%;margin-top:10px" onclick="clearHistory()">Clear History</button>
+</div>
+</div>
+
+<div style="text-align:center;padding:50px 0;color:var(--muted);font-size:13px">
+<div style="display:flex;gap:10px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
+<span class="tag">Oreoluwa Olawale</span><span class="tag">phantomthedev</span><span class="tag">phantomthedev@proton.me</span><span class="tag">+2349160352202</span><span class="tag">Abuja, NG</span>
+</div>
+Backend Engineer • Cybersecurity • Flask • Vercel • Render<br>
+Supports: TikTok (main), IG, FB, X, Pinterest, YouTube, Reddit, Any public link
+</div>
+</div>
+
+<script>
+let currentResult = null;
+
+async function loadPlatforms(){
+  try{
+    const r = await fetch('/api/platforms');
+    const d = await r.json();
+    document.getElementById('platformsList').innerHTML = d.supported.map(p=>`
+      <div class="platform ${p.name==='TikTok'?'main':''}">${p.icon} ${p.name}</div>
+    `).join('');
+  }catch(e){
+    document.getElementById('platformsList').innerHTML = '<div class="platform main">🎵 TikTok (main)</div><div class="platform">📸 Instagram</div><div class="platform">👍 Facebook</div><div class="platform">𝕏 X</div><div class="platform">📌 Pinterest</div><div class="platform">▶️ YouTube</div><div class="platform">🔗 Any Link</div>';
+  }
+}
+loadPlatforms();
+
+async function pasteClipboard(){
+  try{
+    const text = await navigator.clipboard.readText();
+    document.getElementById('urlInput').value = text;
+    detectInput();
+  }catch(e){
+    document.getElementById('urlInput').focus();
+  }
+}
+
+function detectInput(){
+  const url = document.getElementById('urlInput').value.toLowerCase();
+  // Could auto-detect platform icon here
+}
+
+document.getElementById('urlInput').addEventListener('input', detectInput);
+document.getElementById('urlInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter') downloadNow(); });
+
+async function downloadNow(){
+  const url = document.getElementById('urlInput').value.trim();
+  if(!url){
+    alert('Paste a TikTok or any video link first');
+    return;
+  }
+  const btn = document.getElementById('dlBtn');
+  const area = document.getElementById('resultArea');
+  btn.innerHTML = '<div class="loader"></div> Extracting...';
+  btn.disabled = true;
+  area.style.display = 'block';
+  area.innerHTML = `<div class="card" style="text-align:center;padding:40px"><div class="loader" style="margin:0 auto 12px"></div><div class="muted">Extracting video via backend /api/download...<br>Supports TikTok main + IG, FB, X, Pinterest, YT, any link</div></div>`;
+  
+  try{
+    const r = await fetch('/api/download', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({url})
+    });
+    const data = await r.json();
+    
+    if(data.success){
+      currentResult = data;
+      area.innerHTML = `
+        <div class="card">
+          <div style="display:flex;gap:8px;margin-bottom:12px">
+            <span class="badge badge-tt">${data.platform?.name?.toUpperCase() || 'VIDEO'}</span>
+            ${data.platform?.main ? '<span class="badge badge-tt">MAIN • TIKTOK</span>' : ''}
+            <span class="tag">${data.extractor || 'yt-dlp'}</span>
+          </div>
+          <div class="video-preview">
+            <img class="thumb" src="${data.thumbnail || 'https://via.placeholder.com/140x180?text=No+Thumb'}" onerror="this.src='https://via.placeholder.com/140x180?text=Video'">
+            <div class="meta">
+              <div style="font-weight:700;font-size:18px;line-height:1.2">${data.title || 'Video'}</div>
+              <div style="color:var(--muted);font-size:13px;margin:6px 0">
+                ${data.uploader ? `By ${data.uploader} • ` : ''}${data.platform?.name} • ${data.duration ? Math.floor(data.duration/60)+':'+String(Math.floor(data.duration%60)).padStart(2,'0') : 'Video'}
+              </div>
+              <div style="font-size:12px;color:var(--muted);word-break:break-all">${data.webpage_url || url}</div>
+              <div class="download-options">
+                <a class="btn btn-green" href="${data.direct_url}" target="_blank" download>⬇️ Download HD (Direct)</a>
+                <a class="btn btn-g" href="/api/proxy-download?url=${encodeURIComponent(data.direct_url)}" target="_blank">Proxy Download (No CORS)</a>
+                <button class="btn btn-g" onclick="copyLink('${data.direct_url}')">Copy Link</button>
+              </div>
+              ${data.formats ? `<div style="margin-top:12px"><div style="font-size:12px;font-weight:600;margin-bottom:6px">Other qualities (from backend):</div><div style="display:flex;flex-wrap:wrap;gap:6px">${data.formats.map(f=>`<a class="tag" href="${f.url}" target="_blank">${f.quality} • ${f.ext}</a>`).join('')}</div></div>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+      loadHistory();
+    } else {
+      area.innerHTML = `<div class="card" style="border-color:#ff4d4d55;background:#1a0f12"><div style="color:#ff8080;font-weight:700">❌ ${data.error}</div><div style="color:var(--muted);font-size:13px;margin-top:8px">Platform: ${data.platform?.name} ${data.platform?.icon}<br>${data.suggestion || ''}</div><div style="margin-top:12px"><button class="btn btn-g" onclick="downloadNow()">Try Again</button></div></div>`;
+    }
+  } catch(e){
+    area.innerHTML = `<div class="card" style="border-color:#ff4d4d55"><div style="color:#ff8080">Error: ${e.message}<br>Backend /api/download may be cold-starting on Vercel Hobby. Wait 5s and retry.</div><button class="btn btn-g" style="margin-top:10px" onclick="downloadNow()">Retry</button></div>`;
+  } finally {
+    btn.innerHTML = 'Download';
+    btn.disabled = false;
+  }
+}
+
+function copyLink(url){
+  navigator.clipboard.writeText(url);
+  alert('Copied: ' + url.slice(0,100)+'...');
+}
+
+async function loadHistory(){
+  try{
+    const r = await fetch('/api/history');
+    const d = await r.json();
+    const list = document.getElementById('historyList');
+    if(!d.history || d.history.length===0){
+      list.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:20px;text-align:center">No history yet - download a TikTok link first.<br>History saved in Vercel backend /tmp</div>';
+      return;
+    }
+    list.innerHTML = d.history.slice(0,10).map(h=>`
+      <div class="history-item">
+        <img class="history-thumb" src="${h.thumbnail || 'https://via.placeholder.com/56?text=TT'}" onerror="this.style.display='none'">
+        <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.title || h.url}</div><div style="font-size:11px;color:var(--muted)">${h.platform?.icon} ${h.platform?.name} • ${new Date(h.time).toLocaleTimeString()}</div></div>
+        <button class="btn btn-g" style="padding:6px 10px;font-size:12px" onclick="document.getElementById('urlInput').value='${h.url}';window.scrollTo({top:0,behavior:'smooth'});">Reuse</button>
+      </div>
+    `).join('');
+  }catch(e){
+    document.getElementById('historyList').innerHTML = '<div style="color:var(--muted);font-size:12px">History needs Vercel backend deploy</div>';
+  }
+}
+loadHistory();
+
+async function clearHistory(){
+  if(!confirm('Clear all history?')) return;
+  await fetch('/api/clear-history',{method:'POST'});
+  loadHistory();
+}
+</script>
+</body>
+</html>
